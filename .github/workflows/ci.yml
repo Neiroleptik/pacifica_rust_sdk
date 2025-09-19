@@ -2,10 +2,15 @@ name: SDK CI
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+    paths-ignore:
+      - 'src/bin/**'
   pull_request:
-    branches: [main]
-
+    branches:
+      - main
+    paths-ignore:
+      - 'src/bin/**'
 jobs:
   build:
     runs-on: ubuntu-latest

@@ -289,10 +289,13 @@ impl InfoClient {
         &self,
         equity_history_params: EquityHistoryParams,
     ) -> Result<DefaultResponse<EquityHistoryResponse>, ExchangeError> {
-        match_both_some(&equity_history_params.start_time, &equity_history_params.start_time)?;
+        match_both_some(
+            &equity_history_params.start_time,
+            &equity_history_params.end_time,
+        )?;
         self.request_info_fn::<DefaultResponse<EquityHistoryResponse>, EquityHistoryParams>(
             InfoEndpoint::EquityHistory,
-            &equity_history_params
+            &equity_history_params,
         )
         .await
     }

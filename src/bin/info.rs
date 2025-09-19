@@ -6,7 +6,8 @@ use pacifica_rust_sdk::{
         utils::get_timestamp_ms,
     },
     info::info_client::InfoClient,
-    logging::init_logging_once, models::info::params::account::EquityHistoryParams,
+    logging::init_logging_once, 
+    models::info::params::account::EquityHistoryParams,
 };
 use solana_sdk::pubkey::Pubkey;
 use tracing::info;
@@ -102,23 +103,19 @@ async fn main() {
         Err(e) => info!("--- Balance History ---\nError: {:?}", e),
     }
 
-    let equity_history_params = EquityHistoryParams{
-            account,
-            time_range: EquityHistoryInterval::OneDay,
-            start_time: Some(now - 1_000_000),
-            end_time: Some(now),
-            granularity_in_minutes: None,
-            limit: Some(10),
-            offset: Some(0),
-        };
-    match client
-        .equity_history(equity_history_params)
-        .await
-    {
+    let equity_history_params = EquityHistoryParams {
+        account,
+        time_range: EquityHistoryInterval::OneDay,
+        start_time: Some(now - 1_000_000),
+        end_time: Some(now),
+        granularity_in_minutes: None,
+        limit: Some(10),
+        offset: Some(0),
+    };
+    match client.equity_history(equity_history_params).await {
         Ok(eh) => info!("--- Equity History ---\n{:#?}", eh),
         Err(e) => info!("--- Equity History ---\nError: {:?}", e),
     }
-
     match client.opened_orders(account).await {
         Ok(oo) => info!("--- Opened Orders ---\n{:#?}", oo),
         Err(e) => info!("--- Opened Orders ---\nError: {:?}", e),

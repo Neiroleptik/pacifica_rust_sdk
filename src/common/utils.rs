@@ -40,10 +40,7 @@ pub fn sort_json_keys(value: &Value) -> Value {
             Value::Object(sorted)
         }
         Value::Array(arr) => {
-            let new_arr = arr
-                .iter()
-                .map(sort_json_keys)
-                .collect::<Vec<Value>>();
+            let new_arr = arr.iter().map(sort_json_keys).collect::<Vec<Value>>();
             Value::Array(new_arr)
         }
         _ => value.clone(),
