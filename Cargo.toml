@@ -10,7 +10,6 @@ serde_with = "3.14.0"
 solana-sdk = "3.0.0"
 bs58 = "0.5.1"
 reqwest = { version = "0.12.23", features = ["json"] }
-hex = "0.4.3"
 uuid = { version = "1.18.1", features = ["v4", "serde"] }
 rust_decimal = "1.36"
 tokio = { version = "1.47.1", features = ["rt", "rt-multi-thread", "macros"] }
@@ -18,13 +17,7 @@ futures-util = "0.3.31"
 tokio-tungstenite = { version = "0.27", default-features = false, features = ["connect", "rustls-tls-webpki-roots"] }
 rustls = { version = "0.23", default-features = false, features = ["ring"] }
 webpki-roots = "0.22"
-log = "0.4.28"
 thiserror = "2.0.16"
 dotenvy = "0.15.7"
-env_logger = "0.11.8"
-anyhow = "1.0.99"
-url = "2.5.7"
-rand = "0.8.5"
 tracing = "0.1.41"
 tracing-subscriber = { version = "0.3.20", features = ["env-filter"] }
-solana-address = "1.0.0"

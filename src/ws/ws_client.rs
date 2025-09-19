@@ -8,7 +8,7 @@ use std::{
 };
 
 use futures_util::{SinkExt, StreamExt, stream::SplitSink};
-use log::error;
+use tracing::error;
 use serde::Serialize;
 use serde_json::{Value, json};
 use solana_sdk::pubkey::Pubkey;

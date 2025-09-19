@@ -5,7 +5,6 @@ pub use std::time::Duration;
 pub use tokio::sync::{Mutex, RwLock};
 pub use tokio::task::JoinHandle;
 pub use serde::{Deserialize, Serialize};
-pub use anyhow::{Result, anyhow};
 pub use tracing::{debug, info , error};
 pub use uuid::Uuid;
 pub use rust_decimal::Decimal;
