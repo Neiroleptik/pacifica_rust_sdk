@@ -6,7 +6,7 @@ use pacifica_rust_sdk::{
         utils::get_timestamp_ms,
     },
     info::info_client::InfoClient,
-    logging::init_logging_once, 
+    logging::init_logging_once,
     models::info::params::account::EquityHistoryParams,
 };
 use solana_sdk::pubkey::Pubkey;
