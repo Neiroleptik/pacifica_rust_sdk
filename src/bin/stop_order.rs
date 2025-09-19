@@ -2,7 +2,7 @@ use std::{env, str::FromStr};
 
 use dotenvy::from_filename;
 use tracing::info;
-use pacific_rust_sdk::{
+use pacifica_rust_sdk::{
     common::{
         types::OrderSide,
     },

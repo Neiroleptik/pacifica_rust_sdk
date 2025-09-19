@@ -1,7 +1,7 @@
 use std::str::FromStr;
 
 use dotenvy::from_filename;
-use pacific_rust_sdk::{
+use pacifica_rust_sdk::{
     common::{
         types::{AggLevel, DefaultWebSocketMsg, Interval},
     },

@@ -1,7 +1,7 @@
 use std::env;
 
 use dotenvy::from_filename;
-use pacific_rust_sdk::{
+use pacifica_rust_sdk::{
     exchange::exchange_client::ExchangeClient,
     logging::init_logging_once,
 };

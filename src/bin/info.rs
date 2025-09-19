@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use pacific_rust_sdk::{
+use pacifica_rust_sdk::{
     common::{
         types::{AggLevel, EquityHistoryInterval, Interval},
         utils::get_timestamp_ms,
