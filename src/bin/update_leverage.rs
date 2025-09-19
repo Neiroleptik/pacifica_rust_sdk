@@ -1,10 +1,9 @@
 use std::env;
 
-use dotenvy::{from_filename};
+use dotenvy::from_filename;
 use pacifica_rust_sdk::{
-    exchange::exchange_client::ExchangeClient,
-    logging::init_logging_once,
-    models::exchange::payload::market_settings::UpdateLeveragePayload
+    exchange::exchange_client::ExchangeClient, logging::init_logging_once,
+    models::exchange::payload::market_settings::UpdateLeveragePayload,
 };
 
 use solana_sdk::{

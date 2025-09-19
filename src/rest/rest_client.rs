@@ -1,8 +1,5 @@
 use reqwest::{Client, header::HeaderMap};
-use serde::{
-    Serialize,
-    de::DeserializeOwned,
-};
+use serde::{Serialize, de::DeserializeOwned};
 use tracing::debug;
 
 use crate::common::errors::ExchangeError;

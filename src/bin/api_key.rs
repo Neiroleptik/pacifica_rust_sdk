@@ -1,7 +1,6 @@
 use std::env;
 
 use dotenvy::from_filename;
-use tracing::info;
 use pacifica_rust_sdk::{
     common::types::DefaultResponse,
     exchange::exchange_client::ExchangeClient,
@@ -12,6 +11,7 @@ use pacifica_rust_sdk::{
     },
 };
 use solana_sdk::signature::{Keypair, Signer};
+use tracing::info;
 
 #[tokio::main]
 async fn main() {

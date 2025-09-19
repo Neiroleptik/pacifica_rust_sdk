@@ -1,21 +1,16 @@
 use std::{env, str::FromStr};
 
 use dotenvy::from_filename;
-use tracing::info;
 use pacifica_rust_sdk::{
-    common::types::{ OrderSide, Tif},
+    common::types::{OrderSide, Tif},
     exchange::exchange_client::ExchangeClient,
     logging::init_logging_once,
-    models::{
-        exchange::{
-            payload::{
-                batch_order::BatchOrderActionPayload,
-                order::{CancelOrderPayload, CreateMarketOrderPayload, CreateOrderPayload},
-            },
-            response::{
-                batch_order::BatchOrderModel,
-            },
+    models::exchange::{
+        payload::{
+            batch_order::BatchOrderActionPayload,
+            order::{CancelOrderPayload, CreateMarketOrderPayload, CreateOrderPayload},
         },
+        response::batch_order::BatchOrderModel,
     },
 };
 use rust_decimal::Decimal;
@@ -24,6 +19,7 @@ use solana_sdk::{
     signature::{Keypair, Signer},
 };
 use tracing::error;
+use tracing::info;
 use uuid::Uuid;
 
 #[tokio::main]

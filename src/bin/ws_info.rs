@@ -2,17 +2,13 @@ use std::str::FromStr;
 
 use dotenvy::from_filename;
 use pacifica_rust_sdk::{
-    common::{
-        types::{AggLevel, DefaultWebSocketMsg, Interval},
-    },
+    common::types::{AggLevel, DefaultWebSocketMsg, Interval},
     info::info_client::InfoClient,
     logging::init_logging_once,
-    models::{
-        ws::responses::{
-            AccountInfoResponse, AccountTradesResponse, BalanceResponse, CandleResponse,
-            LeverageResponse, MarginResponse, OrderBookResponse, OrderUpdatesResponse,
-            OrdersResponse, PositionsResponse, PricesResponse, TradesResponse,
-        },
+    models::ws::responses::{
+        AccountInfoResponse, AccountTradesResponse, BalanceResponse, CandleResponse,
+        LeverageResponse, MarginResponse, OrderBookResponse, OrderUpdatesResponse, OrdersResponse,
+        PositionsResponse, PricesResponse, TradesResponse,
     },
 };
 

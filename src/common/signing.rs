@@ -17,7 +17,7 @@ pub fn prepare_message<T: Serialize, U: Serialize>(
     payload: &U,
 ) -> Result<(Value, Vec<u8>), ExchangeError> {
     let data = serde_json::to_value(header)?;
-    if !data.is_object() {}
+    data.is_object();
     match data {
         Value::Object(mut map) => {
             map.insert("data".to_string(), serde_json::to_value(payload)?);

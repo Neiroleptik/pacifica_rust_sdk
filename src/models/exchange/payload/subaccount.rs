@@ -3,10 +3,7 @@ use serde::{Deserialize, Serialize};
 use serde_with::serde_as;
 use solana_sdk::pubkey::Pubkey;
 
-use crate::{
-    common::utils::{Validatable},
-    make_validatable,
-};
+use crate::{common::utils::Validatable, make_validatable};
 
 make_validatable!(SubaccountInitiatePayload);
 #[serde_as]

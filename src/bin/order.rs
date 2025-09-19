@@ -1,15 +1,13 @@
 use std::{env, str::FromStr};
 
 use dotenvy::from_filename;
-use tracing::info;
 use pacifica_rust_sdk::{
     common::types::{OrderSide, Tif},
     exchange::exchange_client::ExchangeClient,
     logging::init_logging_once,
-    models::exchange::{
-        payload::order::{CreateOrderPayload,},
-        },
+    models::exchange::payload::order::CreateOrderPayload,
 };
+use tracing::info;
 
 use rust_decimal::Decimal;
 use solana_sdk::signature::{Keypair, Signer};

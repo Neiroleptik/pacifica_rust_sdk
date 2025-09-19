@@ -1,22 +1,15 @@
 use std::{env, str::FromStr};
 
 use dotenvy::from_filename;
-use tracing::info;
 use pacifica_rust_sdk::{
     common::types::OrderSide,
     exchange::exchange_client::ExchangeClient,
     logging::init_logging_once,
-    models::exchange::{
-        payload::{
-            order::{
-                SetPositionTpslPayload, 
-                TpSlWithOrderPayload
-            },
-        },
-    },
+    models::exchange::payload::order::{SetPositionTpslPayload, TpSlWithOrderPayload},
 };
 use rust_decimal::Decimal;
 use solana_sdk::signature::{Keypair, Signer};
+use tracing::info;
 
 #[tokio::main]
 async fn main() {
@@ -74,7 +67,7 @@ async fn main() {
     // Создаем payload
     let sign_payload = SetPositionTpslPayload {
         symbol: symbol.to_string(),
-        side: side,
+        side,
         take_profit: TpSlWithOrderPayload {
             stop_price: normalized_take_price,
             limit_price: Some(normalized_limit_take_price),

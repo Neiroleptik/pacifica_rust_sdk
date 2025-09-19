@@ -8,7 +8,6 @@ use std::{
 };
 
 use futures_util::{SinkExt, StreamExt, stream::SplitSink};
-use tracing::error;
 use serde::Serialize;
 use serde_json::{Value, json};
 use solana_sdk::pubkey::Pubkey;
@@ -18,11 +17,10 @@ use tokio::{
 };
 use tokio_tungstenite::{
     MaybeTlsStream, WebSocketStream, connect_async,
-    tungstenite::{
-        Utf8Bytes, client::IntoClientRequest, protocol::Message,
-    },
+    tungstenite::{Utf8Bytes, client::IntoClientRequest, protocol::Message},
 };
 use tracing::debug;
+use tracing::error;
 use uuid::Uuid;
 
 use crate::{
@@ -33,11 +31,9 @@ use crate::{
             WebSocketSubscription, WsMethod,
         },
     },
-    models::{
-        ws::subscriptions::{
-            AccountInfo, AccountTrades, Balance, Candle, Leverage, Margin, OrderBook, OrderUpdates,
-            Orders, Positions, Prices, SubscriptionMethod, Trades,
-        },
+    models::ws::subscriptions::{
+        AccountInfo, AccountTrades, Balance, Candle, Leverage, Margin, OrderBook, OrderUpdates,
+        Orders, Positions, Prices, SubscriptionMethod, Trades,
     },
 };
 
@@ -48,6 +44,7 @@ pub struct WebSocketClient(Arc<Inner>);
 struct Inner {
     url: String,
     api_key: Option<String>,
+    #[allow(clippy::type_complexity)]
     write: Arc<Mutex<Option<SplitSink<WebSocketStream<MaybeTlsStream<TcpStream>>, Message>>>>,
     subscribers: Arc<Mutex<HashMap<String, mpsc::Sender<Value>>>>,
     active_subscriptions: Arc<Mutex<HashMap<String, Value>>>,
@@ -492,7 +489,7 @@ impl WebSocketClient {
         let mut params = HashMap::new();
         params.insert(request_method.to_string(), request);
         let web_socket_request: WebSocketRequest<P> = WebSocketRequest {
-            id: request_id.clone(),
+            id: request_id,
             params,
         };
         let msg = json!(web_socket_request).to_string();
@@ -508,11 +505,10 @@ impl WebSocketClient {
     }
 
     // For future: Type () is required for T
-    pub(crate) async fn set_api_key(&self, api_key: String) -> Result<String, ExchangeError> { 
-         Ok(api_key)
+    pub(crate) async fn set_api_key(&self, api_key: String) -> Result<String, ExchangeError> {
+        Ok(api_key)
     }
 }
-
 
 pub struct Subscription {
     client: WebSocketClient,
@@ -673,7 +669,7 @@ impl Inner {
                 Ok(_) => Ok(()),
                 Err(e) => {
                     error!("WebSocket send error: {:?}", e);
-                    Err(ExchangeError::WebSocket(e))
+                    Err(ExchangeError::WebSocket(Box::new(e)))
                 }
             }
         } else {
@@ -691,7 +687,7 @@ impl Inner {
                 Ok(m) => m,
                 Err(e) => {
                     debug!("WebSocket read error: {:?}", e);
-                    return Err(ExchangeError::WebSocket(e));
+                    return Err(ExchangeError::WebSocket(Box::new(e)));
                 }
             };
             debug!("Received WS message: {:?}", msg);

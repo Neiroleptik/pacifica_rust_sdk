@@ -42,7 +42,7 @@ pub fn sort_json_keys(value: &Value) -> Value {
         Value::Array(arr) => {
             let new_arr = arr
                 .iter()
-                .map(|v| sort_json_keys(v))
+                .map(sort_json_keys)
                 .collect::<Vec<Value>>();
             Value::Array(new_arr)
         }
@@ -56,11 +56,11 @@ fn ensure_pubkey(s: &str) -> Result<(), String> {
         .map_err(|_| format!("Not valid public key: {}", s))
 }
 
-pub fn validate_pubkey<S>(pubkey: &String, serializer: S) -> Result<S::Ok, S::Error>
+pub fn validate_pubkey<S>(pubkey: &str, serializer: S) -> Result<S::Ok, S::Error>
 where
     S: Serializer,
 {
-    ensure_pubkey(pubkey).map_err(|e| serde::ser::Error::custom(e))?;
+    ensure_pubkey(pubkey).map_err(serde::ser::Error::custom)?;
     serializer.serialize_str(pubkey)
 }
 
@@ -70,7 +70,7 @@ where
 {
     match pubkey {
         Some(s) => {
-            ensure_pubkey(s).map_err(|e| serde::ser::Error::custom(e))?;
+            ensure_pubkey(s).map_err(serde::ser::Error::custom)?;
             serializer.serialize_some(s)
         }
         None => serializer.serialize_none(),
@@ -145,13 +145,13 @@ where
 {
     let sign_headers = DefaultSignatureHeaders {
         timestamp: get_timestamp_ms(),
-        expiry_window: expiry_window,
+        expiry_window,
         type_field: request_method.to_string(),
     };
     let (_message, signature) = sign_message(&sign_headers, &sign_payload, keypair)?;
     let final_headers = OperationFinalHeaders::Default(DefaultFinalHeaders {
-        account: main_pubkey.clone(),
-        agent_wallet: agent_pubkey.clone(),
+        account: *main_pubkey,
+        agent_wallet: *agent_pubkey,
         signature: PacificSignature::Simple(signature),
         expiry_window: sign_headers.expiry_window,
         timestamp: sign_headers.timestamp,

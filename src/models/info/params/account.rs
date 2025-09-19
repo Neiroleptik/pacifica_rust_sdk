@@ -3,10 +3,7 @@ use serde_with::serde_as;
 use solana_sdk::pubkey::Pubkey;
 
 use crate::{
-    common::{
-        types::EquityHistoryInterval,
-        utils::Validatable,
-    },
+    common::{types::EquityHistoryInterval, utils::Validatable},
     make_validatable,
 };
 

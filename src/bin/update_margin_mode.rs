@@ -1,20 +1,15 @@
 use std::env;
 
 use dotenvy::from_filename;
-use tracing::info;
 use pacifica_rust_sdk::{
-    exchange::exchange_client::ExchangeClient,
-    logging::init_logging_once,
-    models::exchange::{
-        payload::{
-            market_settings::UpdateMarginModePayload,
-        }
-    },
+    exchange::exchange_client::ExchangeClient, logging::init_logging_once,
+    models::exchange::payload::market_settings::UpdateMarginModePayload,
 };
 use solana_sdk::{
     pubkey::Pubkey,
     signature::{Keypair, Signer},
 };
+use tracing::info;
 
 #[tokio::main]
 async fn main() {

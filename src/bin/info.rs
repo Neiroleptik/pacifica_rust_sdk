@@ -6,7 +6,7 @@ use pacifica_rust_sdk::{
         utils::get_timestamp_ms,
     },
     info::info_client::InfoClient,
-    logging::init_logging_once,
+    logging::init_logging_once, models::info::params::account::EquityHistoryParams,
 };
 use solana_sdk::pubkey::Pubkey;
 use tracing::info;
@@ -102,16 +102,17 @@ async fn main() {
         Err(e) => info!("--- Balance History ---\nError: {:?}", e),
     }
 
-    match client
-        .equity_history(
+    let equity_history_params = EquityHistoryParams{
             account,
-            EquityHistoryInterval::OneDay,
-            Some(now - 1_000_000),
-            Some(now),
-            None,
-            Some(10),
-            Some(0),
-        )
+            time_range: EquityHistoryInterval::OneDay,
+            start_time: Some(now - 1_000_000),
+            end_time: Some(now),
+            granularity_in_minutes: None,
+            limit: Some(10),
+            offset: Some(0),
+        };
+    match client
+        .equity_history(equity_history_params)
         .await
     {
         Ok(eh) => info!("--- Equity History ---\n{:#?}", eh),

@@ -107,13 +107,14 @@ pub struct CancelOrderPayload {
 
 impl CancelOrderPayload {
     pub fn validate(&self) -> Result<(), ExchangeError> {
-        Ok(validate_at_least_one(
+        validate_at_least_one(
             &self.order_id,
             &self.client_order_id,
             "order_id",
             "client_order_id",
         )
-        .unwrap())
+        .unwrap();
+        Ok(())
     }
 }
 
@@ -148,12 +149,13 @@ pub struct CancelStopOrderPayload {
 
 impl CancelStopOrderPayload {
     pub fn validate(&self) -> Result<(), ExchangeError> {
-        Ok(validate_at_least_one(
+        validate_at_least_one(
             &self.order_id,
             &self.client_order_id,
             "order_id",
             "client_order_id",
         )
-        .unwrap())
+        .unwrap();
+        Ok(())
     }
 }

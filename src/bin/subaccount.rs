@@ -1,12 +1,9 @@
 use std::env;
 
-use dotenvy::{from_filename};
-use tracing::info;
-use pacifica_rust_sdk::{
-    exchange::exchange_client::ExchangeClient,
-    logging::init_logging_once,
-};
+use dotenvy::from_filename;
+use pacifica_rust_sdk::{exchange::exchange_client::ExchangeClient, logging::init_logging_once};
 use solana_sdk::signature::{Keypair, Signer};
+use tracing::info;
 
 #[tokio::main]
 async fn main() {

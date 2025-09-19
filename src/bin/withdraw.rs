@@ -2,11 +2,8 @@ use std::env;
 
 use dotenvy::from_filename;
 use pacifica_rust_sdk::{
-    exchange::exchange_client::ExchangeClient,
-    logging::init_logging_once,
-    models::{
-        exchange::payload::account::*
-    }
+    exchange::exchange_client::ExchangeClient, logging::init_logging_once,
+    models::exchange::payload::account::*,
 };
 use rust_decimal::{Decimal, prelude::FromPrimitive};
 use solana_sdk::{
@@ -15,7 +12,6 @@ use solana_sdk::{
 };
 
 use tracing::info;
-
 
 #[tokio::main]
 async fn main() {

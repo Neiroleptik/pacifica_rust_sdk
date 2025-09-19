@@ -1,16 +1,12 @@
 use std::env;
 
 use dotenvy::from_filename;
-use pacifica_rust_sdk::{
-    exchange::exchange_client::ExchangeClient,
-    logging::init_logging_once,
-};
+use pacifica_rust_sdk::{exchange::exchange_client::ExchangeClient, logging::init_logging_once};
 
 use solana_sdk::{
     pubkey::Pubkey,
     signature::{Keypair, Signer},
 };
-
 
 #[tokio::main]
 async fn main() {
@@ -35,5 +31,5 @@ async fn main() {
         .await
         .map_err(|e| format!("failed to init client: {:?}", e))
         .unwrap();
-        }
+    }
 }

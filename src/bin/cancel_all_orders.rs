@@ -1,16 +1,13 @@
 use std::env;
 
 use dotenvy::from_filename;
-use tracing::info;
 use pacifica_rust_sdk::{
-    exchange::exchange_client::ExchangeClient,
-    logging::init_logging_once,
-    models::exchange::{
-        payload::order::CancelAllOrdersPayload
-    },
+    exchange::exchange_client::ExchangeClient, logging::init_logging_once,
+    models::exchange::payload::order::CancelAllOrdersPayload,
 };
 use solana_sdk::signature::{Keypair, Signer};
 use tracing::error;
+use tracing::info;
 
 #[tokio::main]
 async fn main() {

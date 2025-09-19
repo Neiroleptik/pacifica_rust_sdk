@@ -1,13 +1,8 @@
 use std::env;
 
 use dotenvy::from_filename;
-use pacifica_rust_sdk::{
-    exchange::exchange_client::ExchangeClient,
-    logging::init_logging_once,
-};
-use solana_sdk::{
-    signature::{Keypair, Signer},
-};
+use pacifica_rust_sdk::{exchange::exchange_client::ExchangeClient, logging::init_logging_once};
+use solana_sdk::signature::{Keypair, Signer};
 
 #[tokio::main]
 async fn main() {
@@ -22,16 +17,17 @@ async fn main() {
     let agent_keypair = Keypair::from_base58_string(env::var("TEST_AGENT_KEY").unwrap().as_str());
     let agent_pubkey = agent_keypair.pubkey();
 
-    { ExchangeClient::new(
-        is_mainnet,
-        enable_ws,
-        api_key.clone(),
-        agent_keypair, // Signer = Agent Keypair
-        main_pubkey,                   // main_pubkey = Your main accounts pubkey
-        Some(agent_pubkey),
-    )
-    .await
-    .map_err(|e| format!("failed to init client: {:?}", e))
-    .unwrap();
+    {
+        ExchangeClient::new(
+            is_mainnet,
+            enable_ws,
+            api_key.clone(),
+            agent_keypair, // Signer = Agent Keypair
+            main_pubkey,   // main_pubkey = Your main accounts pubkey
+            Some(agent_pubkey),
+        )
+        .await
+        .map_err(|e| format!("failed to init client: {:?}", e))
+        .unwrap();
     }
 }

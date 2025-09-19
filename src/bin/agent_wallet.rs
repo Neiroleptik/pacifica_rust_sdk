@@ -1,7 +1,6 @@
 use std::env;
 
 use dotenvy::from_filename;
-use tracing::info;
 use pacifica_rust_sdk::{
     common::types::DefaultResponse,
     exchange::exchange_client::ExchangeClient,
@@ -15,6 +14,7 @@ use solana_sdk::{
     pubkey::Pubkey,
     signature::{Keypair, Signer},
 };
+use tracing::info;
 
 #[tokio::main]
 async fn main() {
@@ -54,7 +54,7 @@ async fn main() {
     let bind_response: DefaultResponse<BindAgentWalletResponse> = client
         .bind_agent_wallet(
             BindAgentWalletPayload {
-                agent_wallet: agent_pubkey.clone(),
+                agent_wallet: agent_pubkey,
             },
             expiry_window,
         )

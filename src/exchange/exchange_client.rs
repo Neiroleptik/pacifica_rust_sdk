@@ -16,45 +16,43 @@ use crate::{
         signing::sign_message,
         types::{
             DefaultFinalHeaders, DefaultResponse, DefaultSignatureHeaders, FinalRequest,
-            OperationFinalHeaders, PacificSignature, SubAccountFinalHeaders
+            OperationFinalHeaders, PacificSignature, SubAccountFinalHeaders,
         },
         utils::{get_timestamp_ms, prepare_final_request},
     },
     exchange::operations::{Operation, SubaccountCreateAction},
     info::info_client::InfoClient,
-    models::{
-        exchange::{
-            payload::{
-                account::WithdrawPayload,
-                agent_wallet::BindAgentWalletPayload,
-                api_key::{CreateApiKeyPayload, ListApiKeysPayload, RevokeApiKeyPayload},
-                batch_order::{
-                    BatchOrderActionPayload, BatchOrderActionType, BatchOrderActionsFinalHeaders,
-                    BatchOrderFinalRequest,
-                },
-                market_settings::{UpdateLeveragePayload, UpdateMarginModePayload},
-                order::{
-                    CancelAllOrdersPayload, CancelOrderPayload, CancelStopOrderPayload,
-                    CreateMarketOrderPayload, CreateOrderPayload, CreateStopOrderPayload,
-                    SetPositionTpslPayload,
-                },
-                subaccount::{
-                    SubaccountConfirmPayload, SubaccountInitiatePayload, SubaccountTransferPayload,
-                },
+    models::exchange::{
+        payload::{
+            account::WithdrawPayload,
+            agent_wallet::BindAgentWalletPayload,
+            api_key::{CreateApiKeyPayload, ListApiKeysPayload, RevokeApiKeyPayload},
+            batch_order::{
+                BatchOrderActionPayload, BatchOrderActionType, BatchOrderActionsFinalHeaders,
+                BatchOrderFinalRequest,
             },
-            response::{
-                account::WithdrawResponse,
-                agent_wallet::BindAgentWalletResponse,
-                api_key::{CreateApiKeyResponse, ListApiKeysResponse, RevokeApiKeyResponse},
-                batch_order::BatchOrderResponse,
-                market_settings::{UpdateLeverageResponse, UpdateMarginModeResponse},
-                order::{
-                    CancelAllOrdersResponse, CancelOrderResponse, CancelStopOrderResponse,
-                    CreateMarketOrderResponse, CreateOrderResponse, CreateStopOrderResponse,
-                    SetPositionTPSLResponse,
-                },
-                subaccount::{SubaccountCreateResponse, SubaccountTransferResponse},
+            market_settings::{UpdateLeveragePayload, UpdateMarginModePayload},
+            order::{
+                CancelAllOrdersPayload, CancelOrderPayload, CancelStopOrderPayload,
+                CreateMarketOrderPayload, CreateOrderPayload, CreateStopOrderPayload,
+                SetPositionTpslPayload,
             },
+            subaccount::{
+                SubaccountConfirmPayload, SubaccountInitiatePayload, SubaccountTransferPayload,
+            },
+        },
+        response::{
+            account::WithdrawResponse,
+            agent_wallet::BindAgentWalletResponse,
+            api_key::{CreateApiKeyResponse, ListApiKeysResponse, RevokeApiKeyResponse},
+            batch_order::BatchOrderResponse,
+            market_settings::{UpdateLeverageResponse, UpdateMarginModeResponse},
+            order::{
+                CancelAllOrdersResponse, CancelOrderResponse, CancelStopOrderResponse,
+                CreateMarketOrderResponse, CreateOrderResponse, CreateStopOrderResponse,
+                SetPositionTPSLResponse,
+            },
+            subaccount::{SubaccountCreateResponse, SubaccountTransferResponse},
         },
     },
     rest::rest_client::RestClient,
@@ -106,8 +104,8 @@ impl ExchangeClient {
             info_client,
             api_key,
             signer_keypair,
-            main_pubkey: main_pubkey,
-            agent_pubkey: agent_pubkey,
+            main_pubkey,
+            agent_pubkey,
             http_client,
             default_headers,
         })
@@ -263,8 +261,8 @@ impl ExchangeClient {
             };
             let (_message, signature) = sign_message(&sign_headers, &order, &self.signer_keypair)?;
             let final_headers = OperationFinalHeaders::Default(DefaultFinalHeaders {
-                account: self.main_pubkey.clone(),
-                agent_wallet: self.agent_pubkey.clone(),
+                account: self.main_pubkey,
+                agent_wallet: self.agent_pubkey,
                 signature: PacificSignature::Simple(signature),
                 expiry_window: sign_headers.expiry_window,
                 timestamp: sign_headers.timestamp,
@@ -454,7 +452,7 @@ impl ExchangeClient {
                 .unwrap(),
         };
         let sub_payload = SubaccountInitiatePayload {
-            account: self.main_pubkey.clone(),
+            account: self.main_pubkey,
         };
         let (_sub_msg, sub_signature) = sign_message(&sub_headers, &sub_payload, subaccount)?;
 
@@ -472,7 +470,7 @@ impl ExchangeClient {
             sign_message(&main_headers, &main_payload, &self.signer_keypair)?;
 
         let final_headers = OperationFinalHeaders::SubAccountCreate(SubAccountFinalHeaders {
-            main_account: self.main_pubkey.clone(),
+            main_account: self.main_pubkey,
             subaccount: subaccount.pubkey(),
             main_signature: PacificSignature::Simple(main_signature),
             sub_signature: PacificSignature::Simple(sub_signature),

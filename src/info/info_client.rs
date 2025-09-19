@@ -9,7 +9,7 @@ use crate::{
         consts,
         errors::ExchangeError,
         tick_lot::TickLot,
-        types::{AggLevel, DefaultResponse, EquityHistoryInterval, Interval},
+        types::{AggLevel, DefaultResponse, Interval},
         utils::match_both_some,
     },
     info::info_endpoint::InfoEndpoint,
@@ -109,7 +109,6 @@ impl InfoClient {
         })
     }
 
-    
     pub async fn set_default_api_key(&mut self, api_key: String) -> Result<(), ExchangeError> {
         self.api_key = Some(api_key);
         if let Some(ref key) = self.api_key {
@@ -288,26 +287,12 @@ impl InfoClient {
     }
     pub async fn equity_history(
         &self,
-        account: Pubkey,
-        time_range: EquityHistoryInterval,
-        start_time: Option<u64>,
-        end_time: Option<u64>,
-        granularity_in_minutes: Option<u8>,
-        limit: Option<u32>,
-        offset: Option<u32>,
+        equity_history_params: EquityHistoryParams,
     ) -> Result<DefaultResponse<EquityHistoryResponse>, ExchangeError> {
-        match_both_some(&start_time, &end_time)?;
+        match_both_some(&equity_history_params.start_time, &equity_history_params.start_time)?;
         self.request_info_fn::<DefaultResponse<EquityHistoryResponse>, EquityHistoryParams>(
             InfoEndpoint::EquityHistory,
-            &EquityHistoryParams {
-                account,
-                time_range,
-                start_time,
-                end_time,
-                granularity_in_minutes,
-                limit,
-                offset,
-            },
+            &equity_history_params
         )
         .await
     }

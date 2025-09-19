@@ -39,7 +39,7 @@ pub enum ExchangeError {
     #[error("WebSocket Error: {0}")]
     WebSocketBox(Box<dyn std::error::Error + Send + Sync>),
     #[error("WebSocket Send Message error: {0}")]
-    WebSocket(TungsteniteError),
+    WebSocket(Box<TungsteniteError>),
     #[error("WebSocket HTTP error: {0}")]
     WebSocketHttp(TungsteniteHttpError),
     #[error("WebSocket lost connection.")]
@@ -56,7 +56,7 @@ pub enum ExchangeError {
 
 impl From<TungsteniteError> for ExchangeError {
     fn from(err: TungsteniteError) -> Self {
-        ExchangeError::WebSocket(err)
+        ExchangeError::WebSocket(Box::new(err))
     }
 }
 

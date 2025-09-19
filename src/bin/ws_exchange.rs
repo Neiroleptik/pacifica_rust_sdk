@@ -9,10 +9,13 @@ use pacifica_rust_sdk::{
     exchange::exchange_client::ExchangeClient,
     logging::init_logging_once,
     models::{
-        exchange::payload::order::{CancelAllOrdersPayload, CancelOrderPayload, CreateMarketOrderPayload, CreateOrderPayload},
+        exchange::payload::order::{
+            CancelAllOrdersPayload, CancelOrderPayload, CreateMarketOrderPayload,
+            CreateOrderPayload,
+        },
         ws::responses::{
             CancelAllOrdersResponse, CancelOrderResponse, CreateMarketOrderResponse,
-            CreateOrderResponse
+            CreateOrderResponse,
         },
     },
 };
