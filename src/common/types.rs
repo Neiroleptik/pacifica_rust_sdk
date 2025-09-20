@@ -278,7 +278,6 @@ pub struct SubAccountFinalHeaders {
 pub enum OperationFinalHeaders {
     Default(DefaultFinalHeaders),
     SubAccountCreate(SubAccountFinalHeaders),
-    Raw(RawSignature),
 }
 
 // Validation not implemented yet
