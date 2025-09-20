@@ -16,7 +16,7 @@ pub struct KlineParams {
     pub symbol: String,
     pub interval: Interval,
     pub start_time: u64,
-    pub end_time: u64,
+    pub end_time: Option<u64>,
 }
 
 make_validatable!(OrderBookParams);

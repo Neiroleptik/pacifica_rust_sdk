@@ -160,7 +160,7 @@ impl InfoClient {
         symbol: String,
         interval: Interval,
         start_time: u64,
-        end_time: u64,
+        end_time: Option<u64>,
     ) -> Result<DefaultResponse<KlineResponse>, ExchangeError> {
         self.request_info_fn::<DefaultResponse<KlineResponse>, KlineParams>(
             InfoEndpoint::Kline,
