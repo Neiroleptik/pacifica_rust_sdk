@@ -38,7 +38,12 @@ async fn main() {
     }
 
     match client
-        .kline(symbol.to_string(), Interval::OneMinute, now - 60_000, Some(now))
+        .kline(
+            symbol.to_string(),
+            Interval::OneMinute,
+            now - 60_000,
+            Some(now),
+        )
         .await
     {
         Ok(kline) => info!("--- Kline ---\n{:#?}", kline),
