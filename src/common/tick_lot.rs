@@ -1,4 +1,3 @@
-// tick_lot.rs
 use std::{collections::HashMap, str::FromStr};
 
 use rust_decimal::prelude::*;
