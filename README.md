@@ -1,7 +1,7 @@
 # Pacifica Rust SDK
 
 This is a community Rust SDK for the Pacifica exchange.\
-It provides both Asynchronous REST and WebSocket clients, utilities for tick/lot handling, and typed models for working with the API.
+It provides both Asynchronous REST and WebSocket clients, utilities for tick/lot handling, signing, etc., and typed models for working with the API.
 
 ***
 
