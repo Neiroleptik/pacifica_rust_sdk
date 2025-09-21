@@ -23,7 +23,7 @@ make_validatable!(OrderBookParams);
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct OrderBookParams {
     pub symbol: String,
-    pub agg_level: AggLevel,
+    pub agg_level: Option<AggLevel>,
 }
 
 make_validatable!(RecentTradesParams);

@@ -2,7 +2,7 @@ use std::str::FromStr;
 
 use dotenvy::from_filename;
 use pacifica_rust_sdk::{
-    common::types::{AggLevel, DefaultWebSocketMsg, Interval},
+    common::types::{DefaultWebSocketMsg, Interval},
     info::info_client::InfoClient,
     logging::init_logging_once,
     models::ws::responses::{
@@ -283,7 +283,7 @@ async fn main() {
 
     // 10. OrderBook
     let sub_orderbook_result = match client.web_socket_client.as_ref() {
-        Some(ws_client) => ws_client.subscribe_to_orderbook(symbol, AggLevel::L1).await,
+        Some(ws_client) => ws_client.subscribe_to_orderbook(symbol, None).await,
         None => Err("WebSocket client not initialized".into()),
     };
 

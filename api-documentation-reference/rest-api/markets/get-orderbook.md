@@ -31,7 +31,7 @@ Params:
 ```rust
 OrderBookParams { 
     symbol: String, 
-    agg_level: AggLevel 
+    agg_level: Option<AggLevel> 
 };
 ```
 
@@ -42,7 +42,7 @@ InfoClient.order_book();
 async fn order_book(
     &self,
     symbol: String,
-    agg_level: AggLevel,
+    agg_level: Option<AggLevel>,
 ) -> Result<DefaultResponse<OrderBookResponse>, ExchangeError>
 ```
 

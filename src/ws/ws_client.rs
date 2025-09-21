@@ -111,7 +111,7 @@ impl WebSocketClient {
     pub async fn subscribe_to_orderbook(
         &self,
         symbol: &str,
-        agg_level: AggLevel,
+        agg_level: Option<AggLevel>,
     ) -> Result<Subscription, ExchangeError> {
         let p = OrderBook {
             symbol: symbol.to_string(),

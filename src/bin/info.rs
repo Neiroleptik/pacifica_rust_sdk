@@ -55,13 +55,16 @@ async fn main() {
         Err(e) => info!("--- Recent Trades ---\nError: {:?}", e),
     }
 
-    match client.order_book(symbol.to_string(), AggLevel::L1).await {
+    match client
+        .order_book(symbol.to_string(), Some(AggLevel::L1))
+        .await
+    {
         Ok(book) => info!("--- Order Book ---\n{:#?}", book),
         Err(e) => info!("--- Order Book ---\nError: {:?}", e),
     }
 
     match client.funding_rate_history(symbol.to_string()).await {
-        Ok(fr) => info!("--- Funding Rate History ---\n{:#?}", fr),
+        Ok(fr) => info!("--- Funding Rate History ---\n{:#?}", fr.data.unwrap()[0]),
         Err(e) => info!("--- Funding Rate History ---\nError: {:?}", e),
     }
 

@@ -187,7 +187,7 @@ impl InfoClient {
     pub async fn order_book(
         &self,
         symbol: String,
-        agg_level: AggLevel,
+        agg_level: Option<AggLevel>,
     ) -> Result<DefaultResponse<OrderBookResponse>, ExchangeError> {
         self.request_info_fn::<DefaultResponse<OrderBookResponse>, OrderBookParams>(
             InfoEndpoint::OrderBook,

@@ -48,7 +48,7 @@ pub struct Prices {}
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct OrderBook {
     pub symbol: String,
-    pub agg_level: AggLevel,
+    pub agg_level: Option<AggLevel>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]

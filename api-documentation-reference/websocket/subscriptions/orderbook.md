@@ -19,7 +19,7 @@ Params:
 ```rust
 WebSocketParams {
     source: SubscriptionMethod::Book.to_string(),
-    params: OrderBook { symbol: String, agg_level: AggLevel },
+    params: OrderBook { symbol: String, agg_level: Option<AggLevel> },
 };
 ```
 
@@ -29,6 +29,6 @@ Function:
 WebSocketClient.subscribe_to_orderbook();
 async fn subscribe_to_orderbook(
     &self, symbol: &str, 
-    agg_level: AggLevel
+    agg_level: Option<AggLevel>
 ) -> Result<Subscription, ExchangeError>
 ```
