@@ -22,16 +22,18 @@ It provides both Asynchronous REST and WebSocket clients, utilities for tick/lot
 
 Add this SDK as a dependency in `Cargo.toml`:
 
+For the latest development version from GitHub:
 ```toml
 [dependencies]
 pacifica_rust_sdk = { git = "https://github.com/Neiroleptik/pacifica_rust_sdk.git", branch = "main" }
 ```
 
-Once published to crates.io, it can be added by version:
-
+For the latest stable version on [crates.io](https://crates.io/crates/pacifica_rust_sdk):
 ```toml
-pacifica_rust_sdk = "0.x.y"
+pacifica_rust_sdk = "x.y.z" 
 ```
+> **Note:** The GitHub version may contain the latest features and fixes, but it could be unstable.  
+> The crates.io version is stable and recommended for production use.
 
 ***
 
