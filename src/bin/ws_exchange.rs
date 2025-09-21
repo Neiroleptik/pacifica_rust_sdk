@@ -75,7 +75,7 @@ async fn main() {
             price: normalized_price,
             amount: normalized_amount,
             side: OrderSide::Bid,
-            tif: Tif::ALO,
+            tif: Tif::IOC,
             reduce_only: false,
             client_order_id: Some(cloid),
             take_profit: None,

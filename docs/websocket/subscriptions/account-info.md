@@ -42,6 +42,8 @@ AccountInfoResponse {
     pub account_equity: Decimal,
     #[serde(rename = "as")]
     pub available_to_spend: Decimal,
+    #[serde(rename = "aw")]
+    pub available_to_withdraw: Decimal,
     #[serde(rename = "b")]
     pub balance: Decimal,
     #[serde(rename = "f")]

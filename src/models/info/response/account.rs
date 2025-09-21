@@ -25,6 +25,7 @@ pub struct AccountResponse {
     pub fee_level: u8,
     pub account_equity: Decimal,
     pub available_to_spend: Decimal,
+    pub available_to_withdraw: Decimal,
     pub pending_balance: Decimal,
     pub total_margin_used: Decimal,
     pub positions_count: u32,
