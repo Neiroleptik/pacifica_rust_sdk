@@ -1,46 +1,74 @@
----
-description: use pacifica_rust_sdk::info::info_client::InfoClient;
----
+# Pacifica Rust SDK
 
-# InfoClient
+This is a community Rust SDK for the Pacifica exchange.\
+It provides both Asynchronous REST and WebSocket clients, utilities for tick/lot handling, and typed models for working with the API.
 
-### Info models (except defaults) located at:
+***
 
-```rust
-use pacifica_rust_sdk::models::info::{params, response};
+## Table of Contents
+
+1. Installation
+2. Usage example
+3. Project structure
+4. Async and error handling
+
+***
+
+## Installation
+
+Add this SDK as a dependency in `Cargo.toml`:
+
+```toml
+[dependencies]
+pacifica_rust_sdk = { git = "https://github.com/Neiroleptik/pacifica_rust_sdk.git", branch = "main" }
 ```
 
-### Client
+Once published to crates.io, it can be added by version:
 
-<pre class="language-rust"><code class="lang-rust">
-use pacifica_rust_sdk::{
-    common::{ utils::tick_lot::TickLot, errors::ExchangeError }
-    rest::rest_client::RestClient,
-    ws::ws_client::WebSocketClient,
-    models::info::response::market::MarketModel
+```toml
+pacifica_rust_sdk = "0.x.y"
+```
+
+***
+
+## Usage example
+
+```rust
+use pacifica_rust_sdk::common::errors::ExchangeError;
+use pacifica_rust_sdk::rest::rest_client::RestClient;
+use pacifica_rust_sdk::info::info_client::InfoClient;
+use pacifica_rust_sdk::models::info::response::market::MarketModel;
+
+#[tokio::main]
+async fn main() -> Result<(), ExchangeError> {
+    // Create InfoClient for mainnet without WebSocket
+    let info = InfoClient::new(
+        true,        // is_mainnet
+        false,       // enable_ws
+        None,        // api_key
+    ).await?;
+
+    // Access market cache
+    let markets: &std::collections::HashMap<String, MarketModel> = &info.market_cache;
+
+    for (symbol, m) in markets {
+        println!("{}: {:?}", symbol, m);
+    }
+
+    Ok(())
 }
+```
 
+If WebSocket is enabled, you can subscribe to channels and receive live updates.
 
-InfoClient {
-<strong>    pub base_url: &#x26;'static str,
-</strong>    pub market_cache: HashMap&#x3C;String, MarketModel>,
-    pub tick_lot_utils: TickLot,
-    pub web_socket_client: Option&#x3C;WebSocketClient>,
-    api_key: Option&#x3C;String>,
-    default_headers: HeaderMap,
-    http_client: RestClient,
-}
+***
 
-impl InfoClient {
-    pub async fn new(
-        is_mainnet: bool,
-        enable_ws: bool,
-        api_key: Option&#x3C;String>,
-    ) -> Result&#x3C;Self, ExchangeError>
-</code></pre>
+## Project structure
 
-### Binary Examples:
+* `rest` - REST client and HTTP utilities
+* `ws` - WebSocket client and subscriptions
+* `info` - information client for market metadata
+* `common` - errors, tick/lot utils, helpers
+* `models` - typed request/response structure
 
-Rest: [Rust SDK Example](src/bin/info.rs)
-
-With WebSocket: [WS Rust SDK Example](src/bin/ws_info.rs)
+***

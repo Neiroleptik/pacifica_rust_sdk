@@ -1,8 +1,10 @@
 # Table of contents
 
+* [Pacifica Rust SDK](README.md)
+
 ## API DOCUMENTATION (reference)
 
-* [InfoClient](README.md)
+* [InfoClient](<README (1).md>)
 * [Error Codes](api-documentation-reference/error-codes.md)
 * [ExchangeClient](api-documentation-reference/exchangeclient.md)
 * [Tick and lot size](api-documentation-reference/tick-and-lot-size.md)
