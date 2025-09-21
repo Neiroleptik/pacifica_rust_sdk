@@ -101,6 +101,7 @@ pub struct OrderHistoryByIdModel {
     pub price: Decimal,
     pub initial_amount: Decimal,
     pub filled_amount: Decimal,
+    pub cancelled_amount: Decimal,
     pub event_type: OrderEventType,
     pub order_type: OrderType,
     pub order_status: OrderStatus,
