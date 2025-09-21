@@ -13,9 +13,12 @@ use pacifica_rust_sdk::{
             CancelAllOrdersPayload, CancelOrderPayload, CreateMarketOrderPayload,
             CreateOrderPayload,
         },
-        ws::responses::{
-            CancelAllOrdersResponse, CancelOrderResponse, CreateMarketOrderResponse,
-            CreateOrderResponse,
+        ws::{
+            requests::RequestMethod,
+            responses::{
+                CancelAllOrdersResponse, CancelOrderResponse, CreateMarketOrderResponse,
+                CreateOrderResponse,
+            },
         },
     },
 };
@@ -80,7 +83,11 @@ async fn main() {
         };
 
         let mut rx = client
-            .request_ws_exchange_fn("create_order", sign_payload, expiry_window)
+            .request_ws_exchange_fn(
+                &RequestMethod::CreateOrder.to_string(),
+                sign_payload,
+                expiry_window,
+            )
             .await
             .unwrap();
 
@@ -118,7 +125,11 @@ async fn main() {
         };
 
         let mut rx = client
-            .request_ws_exchange_fn("create_market_order", sign_payload, expiry_window)
+            .request_ws_exchange_fn(
+                &RequestMethod::CreateMarketOrder.to_string(),
+                sign_payload,
+                expiry_window,
+            )
             .await
             .unwrap();
 
@@ -152,7 +163,11 @@ async fn main() {
         };
 
         let mut rx = client
-            .request_ws_exchange_fn("cancel_order", sign_payload, expiry_window)
+            .request_ws_exchange_fn(
+                &RequestMethod::CancelOrder.to_string(),
+                sign_payload,
+                expiry_window,
+            )
             .await
             .unwrap();
 
@@ -184,7 +199,11 @@ async fn main() {
         };
 
         let mut rx = client
-            .request_ws_exchange_fn("cancel_all_orders", sign_payload, expiry_window)
+            .request_ws_exchange_fn(
+                &RequestMethod::CancelAllOrders.to_string(),
+                sign_payload,
+                expiry_window,
+            )
             .await
             .unwrap();
 
