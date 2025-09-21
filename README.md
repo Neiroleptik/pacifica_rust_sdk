@@ -14,7 +14,6 @@ It provides both Asynchronous REST and WebSocket clients, utilities for tick/lot
 1. Installation
 2. Usage example
 3. Project structure
-4. Async and error handling
 
 ***
 
