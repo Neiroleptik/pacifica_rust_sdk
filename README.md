@@ -10,4 +10,4 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-pacifica-sdk = { git = "https://github.com/Neiroleptik/pacifica_rust_sdk" }
+pacifica-rust-sdk = { git = "https://github.com/Neiroleptik/pacifica_rust_sdk" }
