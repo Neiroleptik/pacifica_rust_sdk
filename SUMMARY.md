@@ -4,7 +4,7 @@
 
 ## API DOCUMENTATION (reference)
 
-* [InfoClient](<README (1).md>)
+* [InfoClient](api-documentation-reference/info-client.md)
 * [Error Codes](api-documentation-reference/error-codes.md)
 * [ExchangeClient](api-documentation-reference/exchangeclient.md)
 * [Tick and lot size](api-documentation-reference/tick-and-lot-size.md)

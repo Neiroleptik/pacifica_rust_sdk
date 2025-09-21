@@ -5,6 +5,10 @@ It provides both Asynchronous REST and WebSocket clients, utilities for tick/lot
 
 ***
 
+* [Documentation](SUMMARY.md)
+
+***
+
 ## Table of Contents
 
 1. Installation
