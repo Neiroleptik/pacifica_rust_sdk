@@ -65,9 +65,6 @@ struct Inner {
     /// Broadcast bus for all events.
     bus_tx: broadcast::Sender<WsEvent>,
 
-    /// Per-remote-channel subscribers for backwards-compatible channel APIs.
-    subscribers: Arc<Mutex<HashMap<String, broadcast::Sender<Value>>>>,
-
     /// Active subscriptions remembered for resubscribe on reconnect.
     /// Key = unique chan_key (e.g., "trades:BTC-PERP").
     active_subscriptions: Arc<Mutex<HashMap<String, WebSocketParams<Value>>>>,
@@ -85,6 +82,9 @@ pub struct SubHandle {
     chan_key: String,
     rx: broadcast::Receiver<Value>,
 }
+
+// Backwards/ergonomic alias for the RAII subscription handle
+pub type Subscription = SubHandle;
 
 impl Drop for SubHandle {
     fn drop(&mut self) {
@@ -124,7 +124,6 @@ impl WebSocketClient {
             api_key,
             write: Arc::new(Mutex::new(None)),
             bus_tx,
-            subscribers: Arc::new(Mutex::new(HashMap::new())),
             active_subscriptions: Arc::new(Mutex::new(HashMap::new())),
             pending_requests: Arc::new(Mutex::new(HashMap::new())),
             closed: Arc::new(AtomicBool::new(false)),
@@ -197,7 +196,7 @@ impl WebSocketClient {
     // Each returns SubHandle and publishes data on the global bus.
     // =========================================================================
 
-    pub async fn subscribe_to_prices(&self) -> Result<SubHandle, ExchangeError> {
+    pub async fn subscribe_to_prices(&self) -> Result<Subscription, ExchangeError> {
         let p = Prices {};
         self.subscribe_raw(SubscriptionMethod::Prices, &p, "prices")
             .await
@@ -207,7 +206,7 @@ impl WebSocketClient {
         &self,
         symbol: &str,
         agg_level: Option<crate::common::types::AggLevel>,
-    ) -> Result<SubHandle, ExchangeError> {
+    ) -> Result<Subscription, ExchangeError> {
         let p = OrderBook {
             symbol: symbol.to_string(),
             agg_level,
@@ -221,7 +220,7 @@ impl WebSocketClient {
         self.subscribe_raw(SubscriptionMethod::Book, &p, &key).await
     }
 
-    pub async fn subscribe_to_trades(&self, symbol: &str) -> Result<SubHandle, ExchangeError> {
+    pub async fn subscribe_to_trades(&self, symbol: &str) -> Result<Subscription, ExchangeError> {
         let p = Trades {
             symbol: symbol.to_string(),
         };
@@ -234,7 +233,7 @@ impl WebSocketClient {
         &self,
         symbol: &str,
         interval: crate::common::types::Interval,
-    ) -> Result<SubHandle, ExchangeError> {
+    ) -> Result<Subscription, ExchangeError> {
         let p = Candle {
             symbol: symbol.to_string(),
             interval: interval.clone(),
@@ -247,7 +246,7 @@ impl WebSocketClient {
     pub async fn subscribe_to_balance(
         &self,
         account: solana_sdk::pubkey::Pubkey,
-    ) -> Result<SubHandle, ExchangeError> {
+    ) -> Result<Subscription, ExchangeError> {
         let p = Balance { account };
         let key = format!("{}:{}", SubscriptionMethod::Balance, account);
         self.subscribe_raw(SubscriptionMethod::Balance, &p, &key)
@@ -257,7 +256,7 @@ impl WebSocketClient {
     pub async fn subscribe_to_margin(
         &self,
         account: solana_sdk::pubkey::Pubkey,
-    ) -> Result<SubHandle, ExchangeError> {
+    ) -> Result<Subscription, ExchangeError> {
         let p = Margin { account };
         let key = format!("{}:{}", SubscriptionMethod::Margin, account);
         self.subscribe_raw(SubscriptionMethod::Margin, &p, &key)
@@ -267,7 +266,7 @@ impl WebSocketClient {
     pub async fn subscribe_to_leverage(
         &self,
         account: solana_sdk::pubkey::Pubkey,
-    ) -> Result<SubHandle, ExchangeError> {
+    ) -> Result<Subscription, ExchangeError> {
         let p = Leverage { account };
         let key = format!("{}:{}", SubscriptionMethod::Leverage, account);
         self.subscribe_raw(SubscriptionMethod::Leverage, &p, &key)
@@ -277,7 +276,7 @@ impl WebSocketClient {
     pub async fn subscribe_to_account_info(
         &self,
         account: solana_sdk::pubkey::Pubkey,
-    ) -> Result<SubHandle, ExchangeError> {
+    ) -> Result<Subscription, ExchangeError> {
         let p = AccountInfo { account };
         let key = format!("{}:{}", SubscriptionMethod::AccountInfo, account);
         self.subscribe_raw(SubscriptionMethod::AccountInfo, &p, &key)
@@ -287,7 +286,7 @@ impl WebSocketClient {
     pub async fn subscribe_to_positions(
         &self,
         account: solana_sdk::pubkey::Pubkey,
-    ) -> Result<SubHandle, ExchangeError> {
+    ) -> Result<Subscription, ExchangeError> {
         let p = Positions { account };
         let key = format!("{}:{}", SubscriptionMethod::Positions, account);
         self.subscribe_raw(SubscriptionMethod::Positions, &p, &key)
@@ -297,7 +296,7 @@ impl WebSocketClient {
     pub async fn subscribe_to_orders(
         &self,
         account: solana_sdk::pubkey::Pubkey,
-    ) -> Result<SubHandle, ExchangeError> {
+    ) -> Result<Subscription, ExchangeError> {
         let p = Orders { account };
         let key = format!("{}:{}", SubscriptionMethod::Orders, account);
         self.subscribe_raw(SubscriptionMethod::Orders, &p, &key)
@@ -307,7 +306,7 @@ impl WebSocketClient {
     pub async fn subscribe_to_order_updates(
         &self,
         account: solana_sdk::pubkey::Pubkey,
-    ) -> Result<SubHandle, ExchangeError> {
+    ) -> Result<Subscription, ExchangeError> {
         let p = OrderUpdates { account };
         let key = format!("{}:{}", SubscriptionMethod::AccountOrderUpdates, account);
         self.subscribe_raw(SubscriptionMethod::AccountOrderUpdates, &p, &key)
@@ -317,7 +316,7 @@ impl WebSocketClient {
     pub async fn subscribe_to_account_trades(
         &self,
         account: solana_sdk::pubkey::Pubkey,
-    ) -> Result<SubHandle, ExchangeError> {
+    ) -> Result<Subscription, ExchangeError> {
         let p = AccountTrades { account };
         let key = format!("{}:{}", SubscriptionMethod::AccountTrades, account);
         self.subscribe_raw(SubscriptionMethod::AccountTrades, &p, &key)
@@ -329,7 +328,7 @@ impl WebSocketClient {
         &self,
         params: WebSocketParams<P>,
         chan_key: &str,
-    ) -> Result<SubHandle, ExchangeError> {
+    ) -> Result<Subscription, ExchangeError> {
         let remote_channel = params.source.clone();
         let params_value = serde_json::to_value(&params.params)?;
         let stored: WebSocketParams<Value> = WebSocketParams {
@@ -353,17 +352,19 @@ impl WebSocketClient {
 
         self.0.send_text(sub).await?;
 
-        // Get or create broadcast sender for this remote channel
-        let mut subs = self.0.subscribers.lock().await;
-        let rx = match subs.get(&remote_channel) {
-            Some(tx) => tx.subscribe(),
-            None => {
-                let (tx, rx) = broadcast::channel(32);
-                subs.insert(remote_channel.clone(), tx);
-                rx
+        // Derive a filtered receiver from the global bus for this remote channel
+        let mut bus_rx = self.events();
+        let (tx, rx) = broadcast::channel(64);
+        let channel_filter = remote_channel.clone();
+        tokio::spawn(async move {
+            while let Ok(ev) = bus_rx.recv().await {
+                if let WsEvent::Channel { channel, payload } = ev
+                    && channel == channel_filter
+                {
+                    let _ = tx.send(payload);
+                }
             }
-        };
-        drop(subs);
+        });
 
         Ok(SubHandle {
             client: self.clone(),
@@ -395,7 +396,7 @@ impl WebSocketClient {
         method: SubscriptionMethod,
         p: &P,
         chan_key: &str,
-    ) -> Result<SubHandle, ExchangeError> {
+    ) -> Result<Subscription, ExchangeError> {
         let params = WebSocketParams {
             source: method.to_string(),
             params: p,
@@ -554,12 +555,6 @@ impl Inner {
 
                     // Channel push
                     if let Some(channel) = value.get("channel").and_then(|v| v.as_str()) {
-                        // Fan out to per-channel subscribers for backward compatibility
-                        let subs = self.subscribers.lock().await;
-                        if let Some(tx) = subs.get(channel) {
-                            let _ = tx.send(value.clone());
-                        }
-
                         let _ = self.bus_tx.send(WsEvent::Channel {
                             channel: channel.to_string(),
                             payload: value,
@@ -635,7 +630,6 @@ impl Clone for Inner {
             api_key: self.api_key.clone(),
             write: self.write.clone(),
             bus_tx: self.bus_tx.clone(),
-            subscribers: self.subscribers.clone(),
             active_subscriptions: self.active_subscriptions.clone(),
             pending_requests: self.pending_requests.clone(),
             closed: self.closed.clone(),
