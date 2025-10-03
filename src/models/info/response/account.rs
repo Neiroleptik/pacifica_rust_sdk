@@ -156,7 +156,5 @@ pub struct TradeHistoryModel {
     pub event_type: OrderEventType,
     pub side: TradeSide,
     pub created_at: u64,
-    #[serde_as(as = "serde_with::DisplayFromStr")]
-    pub counter_party: Pubkey,
     pub cause: TradeCause,
 }
