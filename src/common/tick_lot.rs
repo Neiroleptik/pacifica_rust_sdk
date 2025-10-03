@@ -168,7 +168,7 @@ mod tests {
         let lot = Decimal::from_str("0.00001").unwrap();
 
         let bad_price = Decimal::from_str("100000.5").unwrap();
-        assert_eq!(is_multiple_of(bad_price, tick), false);
+        assert!(!is_multiple_of(bad_price, tick));
         assert_eq!(
             round_price_down_to_tick(bad_price, tick),
             Decimal::from_str("100000").unwrap()
