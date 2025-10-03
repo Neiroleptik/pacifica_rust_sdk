@@ -66,9 +66,6 @@ pub struct OrderBookResponse {
 pub struct TradeModel {
     #[serde(rename = "a")]
     pub amount: Decimal,
-    #[serde(rename = "c")]
-    #[serde_as(as = "serde_with::DisplayFromStr")]
-    pub counter_party: Pubkey,
     #[serde(rename = "d")]
     pub side: TradeSide,
     #[serde(rename = "e")]
