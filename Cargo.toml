@@ -1,6 +1,6 @@
 [package]
 name = "pacifica_rust_sdk"
-version = "0.1.2"
+version = "1.0.0"
 edition = "2024"
 authors = ["Neiroleptik"]
 description = "Rust SDK for pacifica.fi exchange"
