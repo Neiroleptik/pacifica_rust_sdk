@@ -1,7 +1,6 @@
 use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
 use serde_with::serde_as;
-use solana_sdk::pubkey::Pubkey;
 use uuid::Uuid;
 
 use crate::common::types::{
