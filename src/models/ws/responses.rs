@@ -68,8 +68,6 @@ pub struct TradeModel {
     pub amount: Decimal,
     #[serde(rename = "d")]
     pub side: TradeSide,
-    #[serde(rename = "e")]
-    pub event_type: OrderEventType,
     #[serde(rename = "p")]
     pub price: Decimal,
     #[serde(rename = "s")]
