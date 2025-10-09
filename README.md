@@ -6,6 +6,7 @@ It provides both Asynchronous REST and WebSocket clients, utilities for tick/lot
 ***
 
 * [Documentation](SUMMARY.md)
+* [Changelog](CHANGELOG.md)
 
 ***
 
