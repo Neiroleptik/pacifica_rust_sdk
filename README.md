@@ -74,7 +74,9 @@ If WebSocket is enabled, you can subscribe to channels and receive live updates.
 * `rest` - REST client and HTTP utilities
 * `ws` - WebSocket client and subscriptions
 * `info` - information client for market metadata
+* `exchange` - exchange client (info client included)
 * `common` - errors, tick/lot utils, helpers
 * `models` - typed request/response structure
+* `bin` - examples for using all SDK methods
 
 ***
