@@ -21,7 +21,6 @@
     * [Orderbook](docs/websocket/subscriptions/orderbook.md)
     * [Trades](docs/websocket/subscriptions/trades.md)
     * [Candle](docs/websocket/subscriptions/candle.md)
-    * [Account balance](docs/websocket/subscriptions/account-balance.md)
     * [Account margin](docs/websocket/subscriptions/account-margin.md)
     * [Account leverage](docs/websocket/subscriptions/account-leverage.md)
     * [Account info](docs/websocket/subscriptions/account-info.md)

@@ -105,15 +105,6 @@ pub struct CandleResponse {
     pub trades: u64,
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct BalanceResponse {
-    pub total: Decimal,
-    pub available: Decimal,
-    pub locked: Decimal,
-    #[serde(rename = "t")]
-    pub timestamp: u64,
-}
-
 #[serde_as]
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct MarginResponse {
@@ -156,6 +147,8 @@ pub struct AccountInfoResponse {
     pub fee_tier: u8,
     #[serde(rename = "mu")]
     pub margin_used: Decimal,
+    #[serde(rename = "cm")]
+    pub cross_mmr: Decimal,
     #[serde(rename = "oc")]
     pub orders_count: u32,
     #[serde(rename = "pb")]
@@ -181,7 +174,7 @@ pub struct PositionModel {
     #[serde(rename = "d")]
     pub side: OrderSide,
     #[serde(rename = "m")]
-    pub margin: Option<Decimal>,
+    pub margin: Decimal,
     #[serde(rename = "f")]
     pub funding: Decimal,
     #[serde(rename = "i")]

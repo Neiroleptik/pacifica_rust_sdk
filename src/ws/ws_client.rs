@@ -202,34 +202,6 @@ impl WebSocketClient {
         })
     }
 
-    pub async fn subscribe_to_balance(
-        &self,
-        account: Pubkey,
-    ) -> Result<Subscription, ExchangeError> {
-        let p = Balance { account };
-        let params = WebSocketParams {
-            source: SubscriptionMethod::Balance.to_string(),
-            params: p,
-        };
-        let sub = WebSocketSubscription {
-            method: WsMethod::Subscribe,
-            params,
-        };
-        let channel = SubscriptionMethod::Balance.to_string();
-        self.0.send(serde_json::to_string(&sub)?).await?;
-        let (tx, rx) = mpsc::channel(32);
-        self.0.subscribers.lock().await.insert(channel.clone(), tx);
-        self.0
-            .active_subscriptions
-            .lock()
-            .await
-            .insert(channel.clone(), serde_json::to_value(&sub.params)?);
-        Ok(Subscription {
-            client: self.clone(),
-            channel,
-            rx,
-        })
-    }
 
     pub async fn subscribe_to_margin(
         &self,

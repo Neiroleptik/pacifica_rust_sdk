@@ -176,32 +176,7 @@ async fn main() {
         }
     }
 
-    // 6. Balance
-    let sub_balance_result = match client.web_socket_client.as_ref() {
-        Some(ws_client) => ws_client.subscribe_to_balance(account).await,
-        None => Err("WebSocket client not initialized".into()),
-    };
-
-    match sub_balance_result {
-        Ok(sub) => {
-            sub.attach_callback(|data: serde_json::Value| {
-                match serde_json::from_value::<DefaultWebSocketMsg<BalanceResponse>>(data.clone()) {
-                    Ok(response) => {
-                        info!("Balance (callback): {:?}", response);
-                    }
-                    Err(e) => {
-                        error!("Failed to deserialize Balance: {:?} :data {:?}", e, data);
-                    }
-                }
-            });
-        }
-        Err(e) => {
-            error!("Failed to subscribe to Balance: {:?}", e);
-            return;
-        }
-    }
-
-    // 7. Candle
+    // 6. Candle
     let sub_candle_result = match client.web_socket_client.as_ref() {
         Some(ws_client) => {
             ws_client
@@ -230,7 +205,7 @@ async fn main() {
         }
     }
 
-    // 8. Leverage
+    // 7. Leverage
     let sub_leverage_result = match client.web_socket_client.as_ref() {
         Some(ws_client) => ws_client.subscribe_to_leverage(account).await,
         None => Err("WebSocket client not initialized".into()),
@@ -256,7 +231,7 @@ async fn main() {
         }
     }
 
-    // 9. Margin
+    // 8. Margin
     let sub_margin_result = match client.web_socket_client.as_ref() {
         Some(ws_client) => ws_client.subscribe_to_margin(account).await,
         None => Err("WebSocket client not initialized".into()),
@@ -281,7 +256,7 @@ async fn main() {
         }
     }
 
-    // 10. OrderBook
+    // 9. OrderBook
     let sub_orderbook_result = match client.web_socket_client.as_ref() {
         Some(ws_client) => ws_client.subscribe_to_orderbook(symbol, None).await,
         None => Err("WebSocket client not initialized".into()),
@@ -307,7 +282,7 @@ async fn main() {
         }
     }
 
-    // 11. Orders
+    // 10. Orders
     let sub_orders_result = match client.web_socket_client.as_ref() {
         Some(ws_client) => ws_client.subscribe_to_orders(account).await,
         None => Err("WebSocket client not initialized".into()),
@@ -332,7 +307,7 @@ async fn main() {
         }
     }
 
-    // 12. Positions
+    // 11. Positions
     let sub_positions_result = match client.web_socket_client.as_ref() {
         Some(ws_client) => ws_client.subscribe_to_positions(account).await,
         None => Err("WebSocket client not initialized".into()),
