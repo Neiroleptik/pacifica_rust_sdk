@@ -32,8 +32,8 @@ use crate::{
         },
     },
     models::ws::subscriptions::{
-        AccountInfo, AccountTrades, Candle, Leverage, Margin, OrderBook, OrderUpdates,
-        Orders, Positions, Prices, SubscriptionMethod, Trades,
+        AccountInfo, AccountTrades, Candle, Leverage, Margin, OrderBook, OrderUpdates, Orders,
+        Positions, Prices, SubscriptionMethod, Trades,
     },
 };
 
@@ -201,7 +201,6 @@ impl WebSocketClient {
             rx,
         })
     }
-
 
     pub async fn subscribe_to_margin(
         &self,
