@@ -5,6 +5,22 @@ It provides both Asynchronous REST and WebSocket clients, utilities for tick/lot
 
 ***
 
+## ⚠️ API Stability Notice
+
+This SDK interacts with an exchange that is currently in beta.  
+The API changes frequently and without prior notice, including modifications to fields, methods, and data structures.
+
+Because of this:
+- Major versions will continue to change as long as fields or methods are added, removed, or modified.
+- Backward compatibility is not guaranteed between releases.
+- Some modules or endpoints may change or be removed at any time.
+- Always review the changelog before updating.
+
+The SDK is actively maintained to keep up with upstream changes,  
+but API instability should be expected while the exchange remains in beta.
+
+***
+
 * [Documentation](SUMMARY.md)
 * [Changelog](CHANGELOG.md)
 
@@ -78,5 +94,11 @@ If WebSocket is enabled, you can subscribe to channels and receive live updates.
 * `common` - errors, tick/lot utils, helpers
 * `models` - typed request/response structure
 * `bin` - examples for using all SDK methods
+
+***
+
+## 💡 Contributions are welcome!  
+If you encounter outdated structures, missing fields, or other inconsistencies -  
+feel free to open an issue or submit a pull request.
 
 ***
