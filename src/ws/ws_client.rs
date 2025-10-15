@@ -32,7 +32,7 @@ use crate::{
         },
     },
     models::ws::subscriptions::{
-        AccountInfo, AccountTrades, Balance, Candle, Leverage, Margin, OrderBook, OrderUpdates,
+        AccountInfo, AccountTrades, Candle, Leverage, Margin, OrderBook, OrderUpdates,
         Orders, Positions, Prices, SubscriptionMethod, Trades,
     },
 };

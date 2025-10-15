@@ -6,7 +6,7 @@ use pacifica_rust_sdk::{
     info::info_client::InfoClient,
     logging::init_logging_once,
     models::ws::responses::{
-        AccountInfoResponse, AccountTradesResponse, BalanceResponse, CandleResponse,
+        AccountInfoResponse, AccountTradesResponse, CandleResponse,
         LeverageResponse, MarginResponse, OrderBookResponse, OrderUpdatesResponse, OrdersResponse,
         PositionsResponse, PricesResponse, TradesResponse,
     },
