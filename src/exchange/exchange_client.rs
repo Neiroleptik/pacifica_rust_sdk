@@ -6,7 +6,7 @@ use solana_sdk::{
     pubkey::Pubkey,
     signature::{Keypair, Signer},
 };
-use tokio::sync::mpsc;
+use tokio::sync::oneshot;
 use tracing::debug;
 use uuid::Uuid;
 
@@ -150,7 +150,7 @@ impl ExchangeClient {
         request_method: &str,
         sign_payload: P,
         expiry_window: Option<u32>,
-    ) -> Result<mpsc::Receiver<serde_json::Value>, ExchangeError>
+    ) -> Result<oneshot::Receiver<serde_json::Value>, ExchangeError>
     where
         P: Serialize + Debug,
     {

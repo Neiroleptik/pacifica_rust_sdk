@@ -82,7 +82,7 @@ async fn main() {
             stop_loss: None,
         };
 
-        let mut rx = client
+        let rx = client
             .request_ws_exchange_fn(
                 &RequestMethod::CreateOrder.to_string(),
                 sign_payload,
@@ -91,9 +91,10 @@ async fn main() {
             .await
             .unwrap();
 
-        match rx.recv().await.ok_or(ExchangeError::WebSocketSendRequest(
-            "No response".to_string(),
-        )) {
+        match rx
+            .await
+            .map_err(|_| ExchangeError::WebSocketSendRequest("No response".to_string()))
+        {
             Ok(order_response_value) => {
                 let order_response: WebSocketOperationResponse<CreateOrderResponse> =
                     from_value(order_response_value)
@@ -124,7 +125,7 @@ async fn main() {
             stop_loss: None,
         };
 
-        let mut rx = client
+        let rx = client
             .request_ws_exchange_fn(
                 &RequestMethod::CreateMarketOrder.to_string(),
                 sign_payload,
@@ -133,9 +134,10 @@ async fn main() {
             .await
             .unwrap();
 
-        match rx.recv().await.ok_or(ExchangeError::WebSocketSendRequest(
-            "No response".to_string(),
-        )) {
+        match rx
+            .await
+            .map_err(|_| ExchangeError::WebSocketSendRequest("No response".to_string()))
+        {
             Ok(order_response_value) => {
                 let order_response: WebSocketOperationResponse<CreateMarketOrderResponse> =
                     from_value(order_response_value)
@@ -162,7 +164,7 @@ async fn main() {
             client_order_id: Some(cloid),
         };
 
-        let mut rx = client
+        let rx = client
             .request_ws_exchange_fn(
                 &RequestMethod::CancelOrder.to_string(),
                 sign_payload,
@@ -171,9 +173,10 @@ async fn main() {
             .await
             .unwrap();
 
-        match rx.recv().await.ok_or(ExchangeError::WebSocketSendRequest(
-            "No response".to_string(),
-        )) {
+        match rx
+            .await
+            .map_err(|_| ExchangeError::WebSocketSendRequest("No response".to_string()))
+        {
             Ok(order_response_value) => {
                 let order_response: WebSocketOperationResponse<CancelOrderResponse> =
                     from_value(order_response_value)
@@ -198,7 +201,7 @@ async fn main() {
             exclude_reduce_only: false,
         };
 
-        let mut rx = client
+        let rx = client
             .request_ws_exchange_fn(
                 &RequestMethod::CancelAllOrders.to_string(),
                 sign_payload,
@@ -207,9 +210,10 @@ async fn main() {
             .await
             .unwrap();
 
-        match rx.recv().await.ok_or(ExchangeError::WebSocketSendRequest(
-            "No response".to_string(),
-        )) {
+        match rx
+            .await
+            .map_err(|_| ExchangeError::WebSocketSendRequest("No response".to_string()))
+        {
             Ok(order_response_value) => {
                 let order_response: WebSocketOperationResponse<CancelAllOrdersResponse> =
                     from_value(order_response_value)
