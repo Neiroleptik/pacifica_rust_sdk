@@ -16,8 +16,8 @@ Because of this:
 - Some modules or endpoints may change or be removed at any time.
 - Always review the changelog before updating.
 
-The SDK is actively maintained to keep up with upstream changes,  
-but API instability should be expected while the exchange remains in beta.
+The SDK is not actively maintained to keep up with upstream changes.
+API instability should be expected while the exchange remains in beta.
 
 ***
 
